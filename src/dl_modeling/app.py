@@ -34,9 +34,9 @@ def post_predict():
         insert_datas.append(insert_data)
     
     with maria.connect() as conn:
-        conn.execute(insert(MariaCandles), insert_datas)
+        conn.execute(insert(MariaCandles).prefix_with('IGNORE'), insert_datas)
         conn.commit()
-    return 1
+    return 'complete'
 
         
 
