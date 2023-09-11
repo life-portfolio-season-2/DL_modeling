@@ -18,6 +18,7 @@ def process_raw_data(raw_data:list[Row]):
     for market, _df in groupby_df:
         # ['market', 'utc', 'open', 'high', 'low', 'close', 'value', 'volume']
         pk = tuple(_df.loc[_df.utc == _df.utc.max(), :].values.tolist()[0])
+        _df.drop_duplicates('utc', inplace=True)
         output_dfs[pk] = _df.reset_index().drop(columns=['index', 'market']).set_index('utc')
 
     return output_dfs
